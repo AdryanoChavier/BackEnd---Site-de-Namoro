@@ -34,6 +34,24 @@ namespace BackEnd.Controllers
 
             return Ok(usuario);
         }
+
+        public async Task<ActionResult<AppUsuario>> Login(LoginDTO loginDTO)
+        {
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.usuario_nome == loginDTO.Usuairo_nome.ToLower());
+
+            if (usuario == null) return Unauthorized("Usuário inválido");
+            using var hmac = new HMACSHA512(usuario.passwordSalt);
+            var computehash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Senha));
+
+            for (int i = 0; i < computehash.Length; i++) 
+            {
+                if (computehash[i] != usuario.passwordHash[i]) return Unauthorized("Senha inválida");
+            }
+
+            return Ok(usuario);
+        }
+
+
         private async Task<bool> UsuarioExiste(string usuario_nome)
         {
             return await _context.Usuario.AnyAsync(x => x.usuario_nome.ToLower() == usuario_nome.ToLower());
