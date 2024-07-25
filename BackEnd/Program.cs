@@ -1,4 +1,6 @@
 using BackEnd.Data;
+using BackEnd.Interfaces;
+using BackEnd.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd
@@ -16,6 +18,10 @@ namespace BackEnd
             {
                 opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddCors();
+            builder.Services.AddScoped<ITokenService,TokenService>();
+
+
 
             var app = builder.Build();
 
