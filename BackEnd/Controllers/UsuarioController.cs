@@ -1,6 +1,7 @@
 ﻿
 using BackEnd.Data;
 using BackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +16,14 @@ namespace BackEnd.Controllers
         {
             _context = context;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<AppUsuario>> ObterUsuarios()
         {
             var usuarios = _context.Usuario.ToList();
             return Ok(usuarios);
         }
+        [Authorize]
         [HttpGet("{usuario_id:int}")]
         public ActionResult<AppUsuario> ObterUsuario(int usuario_id)
         {

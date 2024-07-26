@@ -17,7 +17,7 @@ namespace BackEnd.Data.Migrations
                     usuarioid = table.Column<int>(name: "usuario_id", type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     usuarionome = table.Column<string>(name: "usuario_nome", type: "TEXT", nullable: false),
-                    usuariosobrenome = table.Column<string>(name: "usuario_sobrenome", type: "TEXT", nullable: false),
+                    usuariosobrenome = table.Column<string>(name: "usuario_sobrenome", type: "TEXT", nullable: true),
                     passwordHash = table.Column<byte[]>(type: "BLOB", nullable: false),
                     passwordSalt = table.Column<byte[]>(type: "BLOB", nullable: false)
                 },
