@@ -1,4 +1,5 @@
 using BackEnd.Data;
+using BackEnd.Extensions;
 using BackEnd.Interfaces;
 using BackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,27 +17,9 @@ namespace BackEnd
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            builder.Services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-            builder.Services.AddCors();
-            builder.Services.AddScoped<ITokenService,TokenService>();
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                var tokenKey = builder.Configuration["TokenKey"] ?? throw new Exception("TokenKey not found");
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-
-            });
-
-
+            builder.Services.AddAplicationServices(builder.Configuration);
+            builder.Services.AddIdentityServices(builder.Configuration);
+           
 
             var app = builder.Build();
 
