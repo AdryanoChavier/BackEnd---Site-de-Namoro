@@ -25,25 +25,25 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<UsuarioDTO>> Registrar(RegistroDTO registroDTO)
         {
             if (await UsuarioExiste(registroDTO.usuario_nome)) return BadRequest("Nome do usuário indisponível");
+            return Ok();
+            //using var hmac = new HMACSHA512();
 
-            using var hmac = new HMACSHA512();
+            //var usuario = new AppUsuario
+            //{
+            //    usuario_nome = registroDTO.usuario_nome.ToLower(),
+            //    usuario_sobrenome = registroDTO.usuario_sobrenome.ToLower(),
+            //    passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registroDTO.senha)),
+            //    passwordSalt = hmac.Key
+            //};
+            //_context.Usuario.Add(usuario);
+            //await _context.SaveChangesAsync();
 
-            var usuario = new AppUsuario
-            {
-                usuario_nome = registroDTO.usuario_nome.ToLower(),
-                usuario_sobrenome = registroDTO.usuario_sobrenome.ToLower(),
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registroDTO.senha)),
-                passwordSalt = hmac.Key
-            };
-            _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return new UsuarioDTO
-            {
-                usuario_nome = usuario.usuario_nome,
-                usuario_sobrenome = usuario.usuario_sobrenome,
-                token = _tokenService.CreateToken(usuario),
-            };
+            //return new UsuarioDTO
+            //{
+            //    usuario_nome = usuario.usuario_nome,
+            //    usuario_sobrenome = usuario.usuario_sobrenome,
+            //    token = _tokenService.CreateToken(usuario),
+            //};
         }
 
 
