@@ -12,11 +12,11 @@ namespace BackEnd.Data
         }
         public async Task<AppUsuario?> GetUsuarioByNomeAsync(string usuario_nome)
         {
-            return await context.Usuario.SingleOrDefaultAsync(x => x.usuario_nome == usuario_nome);
+            return await context.Usuario.Include(x => x.Fotos).SingleOrDefaultAsync(x => x.usuario_nome == usuario_nome);
         }
         public async Task<IEnumerable<AppUsuario>> GetUsuarioAsync()
         {
-            return await context.Usuario.ToListAsync();
+            return await context.Usuario.Include(x => x.Fotos).ToListAsync();
         }
         public async Task<bool> SaveAllAsync()
         {

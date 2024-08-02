@@ -1,5 +1,6 @@
 ﻿
 using BackEnd.Data;
+using BackEnd.Interfaces;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,27 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
 {
-    
-    public class UsuarioController : BaseController
+    [Authorize]
+    public class UsuarioController(IUsuarioRepository usuarioRepository) : BaseController
     {
-        private readonly DataContext _context;
 
-        public UsuarioController(DataContext context)
-        {
-            _context = context;
-        }
-        [AllowAnonymous]
+
         [HttpGet]
-        public ActionResult<IEnumerable<AppUsuario>> ObterUsuarios()
+        public async Task<ActionResult<IEnumerable<AppUsuario>>> ObterUsuarios()
         {
-            var usuarios = _context.Usuario.ToList();
+            var usuarios = await usuarioRepository.GetUsuarioAsync();
             return Ok(usuarios);
         }
-        [Authorize]
-        [HttpGet("{usuario_id:int}")]
-        public ActionResult<AppUsuario> ObterUsuario(int usuario_id)
+
+        [HttpGet("{usuario_nome}")]
+        public async Task<ActionResult<AppUsuario>> ObterUsuario(string usuario_nome)
         {
-            var usuario = _context.Usuario.Find(usuario_id);
+            var usuario = await usuarioRepository.GetUsuarioByNomeAsync(usuario_nome);
 
             if (usuario == null) return NotFound();
 

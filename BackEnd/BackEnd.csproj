@@ -16,6 +16,7 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20240731134957_UpdateUsuarioModels.cs" />
     <Compile Remove="Data\Migrations\20240731134957_UpdateUsuarioModels.Designer.cs" />
+    <Compile Remove="Dtos\FotosDTO.cs" />
   </ItemGroup>
 
   <ItemGroup>

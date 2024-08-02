@@ -14,7 +14,7 @@ namespace BackEnd.Models
         // Relação de 1 pra muitos
 
         public int AppUsuarioId { get; set; }
-        public AppUsuario AppUsuario { get; set; } = null;
+        public AppUsuario AppUsuario { get; set; } = null!;
 
 
     }
