@@ -16,7 +16,7 @@ namespace BackEnd.Extensions
             });
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
-
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             return services;
         }
     }
