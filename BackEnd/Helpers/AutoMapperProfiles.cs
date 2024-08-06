@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BackEnd.Dtos;
+using BackEnd.Extensions;
 using BackEnd.Models;
 
 namespace BackEnd.Helpers
@@ -8,7 +9,9 @@ namespace BackEnd.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<AppUsuario, MembroDTO>();
+            CreateMap<AppUsuario, MembroDTO>()
+                .ForMember(d => d.Idade, o => o.MapFrom(s =>s.DataDeNascimento.CalularIdade()))
+                .ForMember(d => d.FotoUrl, o => o.MapFrom(s => s.Fotos.FirstOrDefault(x => x.IsMain)!.Url));
             CreateMap<Foto, FotoDTO>();
         }
     }

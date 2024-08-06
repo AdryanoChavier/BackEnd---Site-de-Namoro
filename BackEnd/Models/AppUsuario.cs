@@ -24,10 +24,10 @@ namespace BackEnd.Models
         public required string Pais {  get; set; }
         public List<Foto> Fotos { get; set; } = [];
 
-        public int GetIdade()
-        {
-            return DataDeNascimento.CalularIdade();
-        }
+        //public int GetIdade()
+        //{
+        //    return DataDeNascimento.CalularIdade();
+        //}
 
     }
 }

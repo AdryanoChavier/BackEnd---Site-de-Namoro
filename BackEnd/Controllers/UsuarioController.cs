@@ -11,24 +11,23 @@ using Microsoft.EntityFrameworkCore;
 namespace BackEnd.Controllers
 {
     [Authorize]
-    public class UsuarioController(IUsuarioRepository usuarioRepository,IMapper mapper) : BaseController
+    public class UsuarioController(IUsuarioRepository usuarioRepository) : BaseController
     {
 
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MembroDTO>>> ObterUsuarios()
         {
-            var usuarios = await usuarioRepository.GetUsuarioAsync();
-            var usuariosReturn = mapper.Map<IEnumerable<MembroDTO>>(usuarios);
-            return Ok(usuariosReturn);
+            var usuarios = await usuarioRepository.GetMembrosAsync();
+            return Ok(usuarios);
         }
 
         [HttpGet("{usuario_nome}")]
         public async Task<ActionResult<MembroDTO>> ObterUsuario(string usuario_nome)
         {
-            var usuario = await usuarioRepository.GetUsuarioByNomeAsync(usuario_nome);
+            var usuario = await usuarioRepository.GetMembroAsync(usuario_nome);
             if (usuario == null) return NotFound();
-            return mapper.Map<MembroDTO>(usuario);
+            return usuario;
         }
     }
 }

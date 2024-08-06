@@ -1,10 +1,13 @@
-﻿using BackEnd.Interfaces;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using BackEnd.Dtos;
+using BackEnd.Interfaces;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Data
 {
-    public class UsuarioRepository(DataContext context) : IUsuarioRepository
+    public class UsuarioRepository(DataContext context, IMapper mapper) : IUsuarioRepository
     {
         public async Task<AppUsuario?> GetUsuarioByIdAsync(int id)
         {
@@ -25,6 +28,16 @@ namespace BackEnd.Data
         public void Update(AppUsuario usuario)
         {
             context.Entry(usuario).State = EntityState.Modified;
+        }
+
+        public async Task<MembroDTO?> GetMembroAsync(string usuario_nome)
+        {
+            return await context.Usuario.Where(x => x.usuario_nome == usuario_nome).ProjectTo<MembroDTO>(mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<MembroDTO>> GetMembrosAsync()
+        {
+            return await context.Usuario.ProjectTo<MembroDTO>(mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }
