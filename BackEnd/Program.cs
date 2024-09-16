@@ -1,6 +1,7 @@
 using BackEnd.Data;
 using BackEnd.Extensions;
 using BackEnd.Interfaces;
+using BackEnd.Middleware;
 using BackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -22,14 +23,15 @@ namespace BackEnd
            
 
             var app = builder.Build();
-
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
-
+            // Configure the HTTP request pipeline.
+            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+                .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Configure the HTTP request pipeline.
+        
             app.MapControllers();
 
             using var scope = app.Services.CreateScope();

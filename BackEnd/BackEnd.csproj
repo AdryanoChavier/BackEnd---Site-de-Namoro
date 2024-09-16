@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NovaPasta\**" />
-    <Content Remove="NovaPasta\**" />
-    <EmbeddedResource Remove="NovaPasta\**" />
-    <None Remove="NovaPasta\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Data\Migrations\20240731134957_UpdateUsuarioModels.cs" />
     <Compile Remove="Data\Migrations\20240731134957_UpdateUsuarioModels.Designer.cs" />
     <Compile Remove="Dtos\FotosDTO.cs" />
