@@ -13,6 +13,7 @@ namespace BackEnd.Helpers
                 .ForMember(d => d.Idade, o => o.MapFrom(s =>s.DataDeNascimento.CalularIdade()))
                 .ForMember(d => d.FotoUrl, o => o.MapFrom(s => s.Fotos.FirstOrDefault(x => x.IsMain)!.Url));
             CreateMap<Foto, FotoDTO>();
+            CreateMap<MembroUpdateDTO, AppUsuario>();
         }
     }
 }
